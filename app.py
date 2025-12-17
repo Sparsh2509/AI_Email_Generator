@@ -1,9 +1,9 @@
 import streamlit as st
-import google.generativeai as genai
+from google import genai
 import os
 
 # API key environment variable se lena
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+genai.configure(api_key=os.getenv("AIzaSyDNWRFn9t9i7gs9E_coVkPFa4p2hafVx-w"))
 
 st.set_page_config(page_title="AI Email Generator", page_icon="📧")
 
