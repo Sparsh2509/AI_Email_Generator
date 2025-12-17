@@ -1,30 +1,28 @@
 import streamlit as st
 from google import genai
-import os
 
-# API key environment variable se lena
-genai.configure(api_key=os.getenv("AIzaSyDNWRFn9t9i7gs9E_coVkPFa4p2hafVx-w"))
-
-st.set_page_config(page_title="AI Email Generator", page_icon="📧")
+# 🔐 API key yahin daalo
+client = genai.Client(api_key="YOUR_API_KEY_HERE")
 
 st.title("📧 AI Email Generator")
-st.write("Bas topic likho, email ready 🚀")
 
-# User input
-topic = st.text_input("Email kis topic par chahiye?")
+topic = st.text_input("Enter email topic")
+tone = st.selectbox("Select tone", ["Formal", "Angry", "Friendly"])
 
 if st.button("Generate Email"):
     if topic.strip() == "":
-        st.warning("Topic likh bhai 😅")
+        st.warning("Please enter a topic")
     else:
-        model = genai.GenerativeModel("gemini-pro")
-
         prompt = f"""
-        Write a professional email on the topic: {topic}.
-        Keep it clear and polite.
+        Write an email on the topic: {topic}.
+        Tone: {tone}.
+        Keep it clear and well structured.
         """
 
-        response = model.generate_content(prompt)
+        response = client.models.generate_content(
+            model="gemini-1.5-flash",
+            contents=prompt
+        )
 
-        st.subheader("✉️ Generated Email")
+        st.subheader("Generated Email")
         st.write(response.text)
