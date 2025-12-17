@@ -1,8 +1,8 @@
 import streamlit as st
 from google import genai
 
-# 🔐 API key yahin daalo
-client = genai.Client(api_key="YOUR_API_KEY_HERE")
+# 🔐 API key
+client = genai.Client(api_key="AIzaSyDNWRFn9t9i7gs9E_coVkPFa4p2hafVx-w")
 
 st.title("📧 AI Email Generator")
 
@@ -19,10 +19,11 @@ if st.button("Generate Email"):
         Keep it clear and well structured.
         """
 
-        response = client.models.generate_content(
-            model="gemini-1.5-flash",
-            contents=prompt
+        response = client.Models.generate_content(
+            model="models/gemini-2.5-flash",  # ✅ working model
+            contents=[{"type": "text", "text": prompt}]
         )
 
         st.subheader("Generated Email")
-        st.write(response.text)
+        st.write(response.output[0].content)
+
