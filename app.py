@@ -1,14 +1,24 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+print("API KEY FROM ENV:", os.getenv("GEMINI_API_KEY"))
+
+
+
 import streamlit as st
 from google import genai
+import os
+from dotenv import load_dotenv
+
 
 # 🔐 API key
-client = genai.Client(api_key="AIzaSyDNWRFn9t9i7gs9E_coVkPFa4p2hafVx-w")
+load_dotenv()
 
-import streamlit as st
-from google import genai
+API_KEY = os.getenv("GEMINI_API_KEY")
 
-# 🔐 API key
-client = genai.Client(api_key="AIzaSyDNWRFn9t9i7gs9E_coVkPFa4p2hafVx-w")
+client = genai.Client(api_key=API_KEY)
 
 st.title("📧 AI Email Generator")
 

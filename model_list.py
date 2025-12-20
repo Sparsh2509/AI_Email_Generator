@@ -1,6 +1,14 @@
 from google import genai
 
-client = genai.Client(api_key = "AIzaSyDNWRFn9t9i7gs9E_coVkPFa4p2hafVx-w")
+import os
+from dotenv import load_dotenv
+
+# load env variables
+load_dotenv()
+
+API_KEY = os.getenv("GEMINI_API_KEY")
+
+client = genai.Client(api_key=API_KEY)
 
 models = client.models.list()
 for m in models:
