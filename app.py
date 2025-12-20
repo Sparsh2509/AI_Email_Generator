@@ -1,11 +1,9 @@
-import os
-from dotenv import load_dotenv
+# import os
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 
-print("API KEY FROM ENV:", os.getenv("GEMINI_API_KEY"))
-
-
+# print("API KEY FROM ENV:", os.getenv("GEMINI_API_KEY"))
 
 import streamlit as st
 from google import genai
