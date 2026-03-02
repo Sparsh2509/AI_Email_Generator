@@ -1,12 +1,12 @@
 from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 
-
+# Load embeddings
 embeddings = HuggingFaceEmbeddings(
     model_name="all-MiniLM-L6-v2"
 )
 
-
+# Load vectorstore
 vectorstore = FAISS.load_local(
     "faiss_index",
     embeddings,
@@ -17,7 +17,7 @@ retriever = vectorstore.as_retriever(search_kwargs={"k": 2})
 
 query = "Write an internship request email"
 
-docs = retriever.get_relevant_documents(query)
+docs = retriever.invoke(query)
 
 for i, doc in enumerate(docs):
     print(f"\nResult {i+1}")
