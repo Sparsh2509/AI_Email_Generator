@@ -7,9 +7,9 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings
 def build_vectorstore():
     docs = []
 
-    for file in os.listdir("knowledge_base"):
+    for file in os.listdir("Email_Templates_idea"):
         if file.endswith(".txt"):
-            loader = TextLoader(f"knowledge_base/{file}")
+            loader = TextLoader(f"Email_Templates_idea/{file}")
             docs.extend(loader.load())
 
     splitter = RecursiveCharacterTextSplitter(
