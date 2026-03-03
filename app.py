@@ -1,41 +1,37 @@
-# import os
-# from dotenv import load_dotenv
+from rag.retrieval_test import retrieve_context
+from prompts.email_prompt import build_email_prompt
+from langchain_google_genai import ChatGoogleGenerativeAI
 
-# load_dotenv()
+llm = ChatGoogleGenerativeAI(
+    model="gemini-1.5-flash",
+    temperature=0.7
+)
 
-# print("API KEY FROM ENV:", os.getenv("GEMINI_API_KEY"))
+# Example input
+sender = "Sparsh"
+recipient = "HR Manager"
+company = "AI Startup"
+purpose = "internship request"
+tone = "professional"
+key_points = "- Built RAG systems\n- Strong in Python\n- Passionate about AI"
+length = "medium"
 
-import streamlit as st
-from google import genai
-import os
-from dotenv import load_dotenv
+# 🔥 Important — Make smarter retrieval query
+query = f"{purpose} {tone} email"
 
+context = retrieve_context(query)
 
-# 🔐 API key
-load_dotenv()
+prompt = build_email_prompt(
+    sender,
+    recipient,
+    company,
+    purpose,
+    tone,
+    key_points,
+    length,
+    context
+)
 
-API_KEY = os.getenv("GEMINI_API_KEY")
+response = llm.invoke(prompt)
 
-client = genai.Client(api_key=API_KEY)
-
-st.title("📧 AI Email Generator")
-
-topic = st.text_input("Enter email topic")
-tone = st.selectbox("Select tone", ["Formal", "Angry", "Friendly"])
-
-if st.button("Generate Email"):
-    if not topic.strip():
-        st.warning("Please enter a topic")
-    else:
-        prompt = f"Write an email on the topic: {topic}. Tone: {tone}. Keep it clear and well structured."
-
-        # ✅ Pass contents as a string, not a dict
-        response = client.models.generate_content(
-            model="models/gemini-2.5-flash-lite",
-            contents=prompt
-        )
-
-        st.subheader("Generated Email")
-
-        # ✅ Access content correctly
-        st.write(response.text)
+print(response.content)
