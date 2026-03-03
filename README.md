@@ -3,19 +3,19 @@
 An AI-powered Email Generator built using **Retrieval-Augmented Generation (RAG)**.  
 This system generates context-aware professional emails using semantic search over email templates.
 
-Live Demo: https://your-streamlit-link.streamlit.app  
+Live Demo: [https://aiemailgeneratorusingrag-lfcvucjigqzpjmza3ruhhg.streamlit.app/](https://aiemailgeneratorusingrag-lfcvucjigqzpjmza3ruhhg.streamlit.app/) 
 
 ---
 
 ## 🚀 Features
 
-- ✉ Generate professional emails (Cold Email, Internship Request, Follow-up, Apology, Sales Outreach)
-- 🧠 Context-aware generation using RAG
-- 🔎 Semantic template retrieval using FAISS
-- 🤗 HuggingFace embeddings (all-MiniLM-L6-v2)
-- ⚡ Gemini 2.5 Flash Lite for generation
-- 🎛 Interactive Streamlit UI
-- ☁ Deployed on Streamlit Cloud
+- Generate professional emails (Cold Email, Internship Request, Follow-up, Apology, Sales Outreach)
+- Context-aware generation using RAG
+- Semantic template retrieval using FAISS
+- HuggingFace embeddings (all-MiniLM-L6-v2)
+- Gemini 2.5 Flash Lite for generation
+- Interactive Streamlit UI
+- Deployed on Streamlit Cloud
 
 ---
 
@@ -51,23 +51,26 @@ Gemini LLM Generates Email
 
 ## 📂 Project Structure
 
+
 ```
 AI_Email_Generator/
 │
-├── streamlit_app.py
-├── app.py
+├── streamlit_app.py            # Streamlit UI for generating emails using Gemini API
+├── app.py                      # CLI-based email generation interface
+│
 ├── rag/
-│   ├── build_vectorstore.py
-│   ├── retriever.py
+│   ├── build_vectorstore.py    # Creates hugging face embeddings and builds FAISS vector index
+│   ├── retriever.py            # Retrieves top relevant email templates using semantic search
 │
 ├── prompts/
-│   ├── email_prompt.py
+│   ├── email_prompt.py         # Builds structured prompt using user input + retrieved context to 
+│                               # controlled and formatted LLM output
 │
-├── Email_Templates_idea/
+├── Email_Templates_idea/       # Collection of sample email templates for RAG knowledge base
 │
-├── faiss_index/
-├── requirements.txt
-└── README.md
+├── faiss_index/                # Stored FAISS vector database files
+├── requirements.txt            # Project dependencies
+└── README.md                   # Project documentation
 ```
 
 ---
@@ -94,35 +97,28 @@ This ensures more structured and consistent output compared to plain prompt-base
 
 ## 🧪 Run Locally
 
-### 1️⃣ Clone Repository
+### Clone Repository
 
 ```bash
-git clone https://github.com/your-username/AI_Email_Generator_Using_Rag.git
+git clone https://github.com/Sparsh2509/AI_Email_Generator_Using_Rag.git
 cd AI_Email_Generator_Using_Rag
 ```
 
-### 2️⃣ Create Virtual Environment
+### Create Virtual Environment
 
 ```bash
 python -m venv venv
 venv\Scripts\activate
 ```
 
-### 3️⃣ Install Dependencies
+### Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4️⃣ Add API Key
 
-Create `.env` file:
-
-```
-GEMINI_API_KEY=your_api_key_here
-```
-
-### 5️⃣ Run Streamlit App
+### Run Streamlit App
 
 ```bash
 streamlit run streamlit_app.py
@@ -130,32 +126,6 @@ streamlit run streamlit_app.py
 
 ---
 
-## 🔐 Environment Variables
 
-For deployment (Streamlit Cloud), add secret:
 
-```
-GEMINI_API_KEY = "your_api_key_here"
-```
 
----
-
-## 📌 Resume Description
-
-> Built a context-aware AI Email Copilot using Retrieval-Augmented Generation (RAG) with FAISS and HuggingFace embeddings, integrated with Gemini 2.5 for structured professional email generation. Deployed using Streamlit Cloud.
-
----
-
-## 🎯 Future Improvements
-
-- Metadata-based smart retrieval
-- Hybrid search (semantic + keyword)
-- Email history memory
-- PDF resume-based email generation
-- Agentic workflow
-
----
-
-## 📄 License
-
-MIT License
