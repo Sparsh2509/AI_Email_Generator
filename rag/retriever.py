@@ -1,25 +1,24 @@
 from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 
-# Load embeddings
-embeddings = HuggingFaceEmbeddings(
-    model_name="all-MiniLM-L6-v2"
-)
 
-# Load vectorstore
-vectorstore = FAISS.load_local(
-    "faiss_index",
-    embeddings,
-    allow_dangerous_deserialization=True
-)
+def retrieve_context(query: str) -> str:
+    
+    embeddings = HuggingFaceEmbeddings(
+        model_name="sentence-transformers/all-MiniLM-L6-v2"
+    )
 
-retriever = vectorstore.as_retriever(search_kwargs={"k": 2})
+    
+    vectorstore = FAISS.load_local(
+        "faiss_index",
+        embeddings,
+        allow_dangerous_deserialization=True
+    )
 
-query = "Write a professional remote internship request email for a startup."
+    retriever = vectorstore.as_retriever(search_kwargs={"k": 2})
 
-docs = retriever.invoke(query)
+    docs = retriever.invoke(query)
 
-for i, doc in enumerate(docs):
-    print(f"\nResult {i+1}")
-    print("Source:", doc.metadata["source"])
-    print(doc.page_content)
+    context_text = "\n\n".join([doc.page_content for doc in docs])
+
+    return context_text
