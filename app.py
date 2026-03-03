@@ -1,4 +1,4 @@
-from rag.retrieval_test import retrieve_context
+from rag.retriever import retrieve_context
 from prompts.email_prompt import build_email_prompt
 from langchain_google_genai import ChatGoogleGenerativeAI
 
