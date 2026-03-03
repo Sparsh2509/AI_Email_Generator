@@ -11,7 +11,12 @@ def build_email_prompt(
     return f"""
 You are a professional email writer.
 
-Reference examples:
+Use the reference examples below only for tone and structure.
+Do NOT explain anything.
+Do NOT add extra headings.
+Return ONLY the final email.
+
+Reference Examples:
 {context}
 
 Write a {tone} {purpose} email.
@@ -23,9 +28,15 @@ Company: {company_name}
 Key Points:
 {key_points}
 
-Keep it {length}.
+Length: {length}
 
-Generate:
-1. 3 subject lines
-2. Email body
+Output format:
+Subject: <subject line>
+
+Dear {recipient_name},
+
+<email body>
+
+Best regards,
+{sender_name}
 """
