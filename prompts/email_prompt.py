@@ -9,9 +9,9 @@ def build_email_prompt(
     context=""
 ):
     return f"""
-You are an expert professional email writer.
+You are a professional email writer.
 
-Reference Examples:
+Reference examples:
 {context}
 
 Write a {tone} {purpose} email.
@@ -24,7 +24,8 @@ Key Points:
 {key_points}
 
 Keep it {length}.
+
 Generate:
-1. 3 subject lines ranked by engagement.
-2. Email body.
+1. 3 subject lines
+2. Email body
 """
