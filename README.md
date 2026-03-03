@@ -64,7 +64,7 @@ AI_Email_Generator/
 │
 ├── prompts/
 │   ├── email_prompt.py         # Builds structured prompt using user input + retrieved context to 
-│                               # controlled and formatted LLM output
+│                               # control and formatt LLM output
 │
 ├── Email_Templates_idea/       # Collection of sample email templates for RAG knowledge base
 │
