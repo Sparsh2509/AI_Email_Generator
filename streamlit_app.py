@@ -7,7 +7,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 
 # Load environment variables
 load_dotenv()
-gemini_key = os.getenv("GEMINI_API_KEY")
+gemini_key = os.getenv("GEMINI_API_KEY") or st.secrets.get("GEMINI_API_KEY")
 
 if not gemini_key:
     st.error("GEMINI_API_KEY not found in .env file")
