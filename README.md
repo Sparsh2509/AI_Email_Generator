@@ -95,6 +95,54 @@ This ensures more structured and consistent output compared to plain prompt-base
 
 ---
 
+## 📥 Sample Request
+
+Below is an example user input provided through the UI:
+
+```
+Sender Name: Sparsh
+Recipient Name: HR Manager
+Company Name: ABC Technologies
+Purpose: Internship Request
+Tone: Professional
+Length: Medium
+Key Points:
+- Built RAG systems
+- Strong in Python
+- Passionate about AI
+```
+
+---
+
+## 📤 Sample Response
+
+```
+Subject: Application for AI Internship Opportunity
+
+Dear HR Manager,
+
+I hope this message finds you well.
+
+My name is Sparsh, and I am writing to express my strong interest in internship opportunities at ABC Technologies. I have been following your innovative work in the AI space and greatly admire your commitment to building impactful technology solutions.
+
+I have hands-on experience building Retrieval-Augmented Generation (RAG) systems and possess strong proficiency in Python. My passion for artificial intelligence drives me to continuously learn and contribute meaningfully to challenging projects.
+
+I would welcome the opportunity to further discuss how I can contribute to your team. Thank you for your time and consideration.
+
+Best regards,
+Sparsh
+```
+
+---
+
+## 🔎 What Makes This Response Context-Aware?
+
+- The system retrieves similar internship email templates from the FAISS vector database.
+- Relevant tone and structure are injected into the prompt.
+- Gemini 2.5 Flash Lite generates the final structured email.
+
+---
+
 ## 🧪 Run Locally
 
 ### Clone Repository
