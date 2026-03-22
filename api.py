@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from rag.retriever import retrieve_templates       
-from prompts.email_prompt import build_prompt       
+from rag.retriever import retrieve_context       
+from prompts.email_prompt import build_email_prompt       
 import google.generativeai as genai
 import os
 from dotenv import load_dotenv
@@ -13,7 +13,6 @@ app = FastAPI()
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 model = genai.GenerativeModel("gemini-2.5-flash-lite")
 
-# Request schema
 class EmailRequest(BaseModel):
     sender_name: str
     recipient_name: str
@@ -21,7 +20,7 @@ class EmailRequest(BaseModel):
     purpose: str
     tone: str
     length: str
-    key_points: str
+    key_points: list[str]
 
 @app.get("/")
 def root():
@@ -29,20 +28,46 @@ def root():
 
 @app.post("/generate-email")
 def generate_email(request: EmailRequest):
-    templates = retrieve_templates(request.purpose)
+    try:
+        templates = retrieve_context(request.purpose)
 
-    
-    prompt = build_prompt(
-        sender_name=request.sender_name,
-        recipient_name=request.recipient_name,
-        company_name=request.company_name,
-        purpose=request.purpose,
-        tone=request.tone,
-        length=request.length,
-        key_points=request.key_points,
-        context=templates
-    )
+        prompt = build_email_prompt(
+            sender_name=request.sender_name,
+            recipient_name=request.recipient_name,
+            company_name=request.company_name,
+            purpose=request.purpose,
+            tone=request.tone,
+            length=request.length,
+            key_points=request.key_points,
+            context=templates
+        )
 
-    response = model.generate_content(prompt)
+        response = model.generate_content(prompt)
+        full_text = response.text.strip()
 
-    return {"email": response.text}
+        # Parse subject and body
+        subject = ""
+        body = ""
+
+        for i, line in enumerate(full_text.split("\n")):
+            if line.lower().startswith("subject:"):
+                subject = line.replace("Subject:", "").replace("subject:", "").strip()
+            else:
+                body = "\n".join(full_text.split("\n")[i:]).strip()
+                break
+
+        return {
+            "success": True,
+            "data": {
+                "subject": subject,
+                "body": body
+            },
+            "error": None
+        }
+
+    except Exception as e:
+        return {
+            "success": False,
+            "data": None,
+            "error": str(e)
+        }
