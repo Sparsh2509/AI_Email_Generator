@@ -169,9 +169,8 @@ uvicorn api:app --reload
 {
   "success": true,
   "data": {
-    "email": "Subject: ...\n\nDear HR Manager,\n\n..."
-  },
-  "error": null
+    "email": "Subject: Internship Inquiry - AI Enthusiast with RAG Systems Experience\n\nDear HR Manager,\n\nI am writing to express my keen interest in internship opportunities at ABC Technologies. Having developed a strong proficiency in Python and a passion for Artificial Intelligence, I am particularly drawn to your company's innovative work in the field.\n\nMy experience includes building Retrieval-Augmented Generation (RAG) systems, and I am eager to apply and further develop these skills in a professional environment. I am confident that my technical abilities and dedication would allow me to make a meaningful contribution to your team.\n\nThank you for considering my application. I have attached my resume for your review and welcome the opportunity to discuss how I can contribute to ABC Technologies.\n\nBest regards,\nSparsh"
+  }
 }
 ```
 ---
