@@ -52,7 +52,7 @@ def generate_email(request: EmailRequest):
             "success": True,
             "data": {
                 "email": response.text
-            },
+            }
         }
 
     except Exception as e:
