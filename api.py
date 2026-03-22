@@ -43,24 +43,11 @@ def generate_email(request: EmailRequest):
         )
 
         response = model.generate_content(prompt)
-        full_text = response.text.strip()
-
-        # Parse subject and body
-        subject = ""
-        body = ""
-
-        for i, line in enumerate(full_text.split("\n")):
-            if line.lower().startswith("subject:"):
-                subject = line.replace("Subject:", "").replace("subject:", "").strip()
-            else:
-                body = "\n".join(full_text.split("\n")[i:]).strip()
-                break
 
         return {
             "success": True,
             "data": {
-                "subject": subject,
-                "body": body
+                "email": response.text
             },
             "error": None
         }
