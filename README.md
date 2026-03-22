@@ -46,6 +46,8 @@ Gemini LLM Generates Email
 - FAISS Vector Database
 - Google Gemini API
 - dotenv
+- FastAPI (REST API)
+- Postman (API Testing)
 
 ---
 
@@ -70,6 +72,7 @@ AI_Email_Generator/
 │
 ├── faiss_index/                # Stored FAISS vector database files
 ├── requirements.txt            # Project dependencies
+├── api.py                      # FastAPI REST endpoint to expose RAG pipeline
 └── README.md                   # Project documentation
 ```
 
@@ -133,6 +136,44 @@ Best regards,
 Sparsh
 ```
 
+---
+
+## 🔌 REST API
+
+A FastAPI layer was built to expose the RAG pipeline as a REST endpoint.
+
+### Run API Locally
+```bash
+uvicorn api:app --reload
+```
+
+### Endpoint
+
+`POST /generate-email`
+
+### Request Body
+```json
+{
+  "sender_name": "Sparsh",
+  "recipient_name": "HR Manager",
+  "company_name": "ABC Technologies",
+  "purpose": "Internship Request",
+  "tone": "Professional",
+  "length": "Medium",
+  "key_points": ["Built RAG systems", "Strong in Python", "Passionate about AI"]
+}
+```
+
+### Response
+```json
+{
+  "success": true,
+  "data": {
+    "email": "Subject: ...\n\nDear HR Manager,\n\n..."
+  },
+  "error": null
+}
+```
 ---
 
 ## 🔎 What Makes This Response Context-Aware?
