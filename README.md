@@ -3,7 +3,9 @@
 An AI-powered Email Generator built using **Retrieval-Augmented Generation (RAG)**.  
 This system generates context-aware professional emails using semantic search over email templates.
 
-Live Demo: [https://aiemailgeneratorusingrag-lfcvucjigqzpjmza3ruhhg.streamlit.app/](https://aiemailgeneratorusingrag-lfcvucjigqzpjmza3ruhhg.streamlit.app/) 
+Live UI Demo: [https://aiemailgeneratorusingrag-lfcvucjigqzpjmza3ruhhg.streamlit.app/](https://aiemailgeneratorusingrag-lfcvucjigqzpjmza3ruhhg.streamlit.app/) 
+
+Live REST API: [https://ai-email-generator-using-rag.onrender.com](https://ai-email-generator-using-rag.onrender.com)
 
 ---
 
@@ -142,6 +144,10 @@ Sparsh
 
 A FastAPI layer was built to expose the RAG pipeline as a REST endpoint.
 
+### Live API Endpoint (Render)
+You can test the API directly via POST request at:
+`https://ai-email-generator-using-rag.onrender.com/generate-email`
+
 ### Run API Locally
 ```bash
 uvicorn api:app --reload
@@ -154,7 +160,7 @@ uvicorn api:app --reload
 ### Request Body
 ```json
 {
-  "sender_name": "Sparsh",
+  "sender_name": "Sparsh Gupta",
   "recipient_name": "HR Manager",
   "company_name": "ABC Technologies",
   "purpose": "Internship Request",
@@ -169,7 +175,7 @@ uvicorn api:app --reload
 {
   "success": true,
   "data": {
-    "email": "Subject: Internship Inquiry - AI Enthusiast with RAG Systems Experience\n\nDear HR Manager,\n\nI am writing to express my keen interest in internship opportunities at ABC Technologies. Having developed a strong proficiency in Python and a passion for Artificial Intelligence, I am particularly drawn to your company's innovative work in the field.\n\nMy experience includes building Retrieval-Augmented Generation (RAG) systems, and I am eager to apply and further develop these skills in a professional environment. I am confident that my technical abilities and dedication would allow me to make a meaningful contribution to your team.\n\nThank you for considering my application. I have attached my resume for your review and welcome the opportunity to discuss how I can contribute to ABC Technologies.\n\nBest regards,\nSparsh"
+    "email": "Subject: Internship Inquiry - AI and Python Expertise\n\nDear HR Manager,\n\nI am writing to express my enthusiastic interest in internship opportunities at ABC Technologies, particularly within roles that leverage artificial intelligence. My academic and personal projects have provided me with practical experience in developing robust RAG (Retrieval-Augmented Generation) systems, a field I find incredibly dynamic and promising. I am confident that my foundational knowledge and hands-on experience in building these sophisticated AI architectures align well with the innovative work being done at your company.\n\nMy technical proficiency is strongly rooted in Python, a language I have utilized extensively for data manipulation, algorithm implementation, and the development of complex AI applications. I am passionate about the transformative potential of AI and am eager to contribute my skills to a forward-thinking organization like ABC Technologies. I am keen to learn from experienced professionals and gain invaluable real-world exposure in a challenging and rewarding environment.\n\nThank you for considering my application. I have attached my resume for your review and welcome the opportunity to discuss how my skills and passion for AI can benefit ABC Technologies.\n\nBest regards,\nSparsh Gupta"
   }
 }
 ```
@@ -204,6 +210,16 @@ venv\Scripts\activate
 ```bash
 pip install -r requirements.txt
 ```
+
+### Environment Variables
+
+Create a `.env` file in the root of project and add API keys. We use the Hugging Face Serverless Inference API to handle embeddings with zero local memory cost.
+
+```env
+GEMINI_API_KEY="google_gemini_token"
+HF_TOKEN="huggingface_token"
+```
+> **Important:**Hugging Face token must have the **"Make calls to the serverless Inference API"** permission enabled.
 
 
 ### Run Streamlit App
