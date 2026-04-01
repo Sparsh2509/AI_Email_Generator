@@ -32,7 +32,23 @@ def root():
 @app.post("/generate-email")
 def generate_email(request: EmailRequest):
     try:
-        templates = retrieve_context(request.purpose)
+        # Build a rich semantic query from all available request fields so the
+        # vector retrieval surfaces examples that are contextually relevant to
+        # the specific purpose, tone, recipient, and key points — not just a
+        # generic purpose label.
+        key_points_preview = " ".join(request.key_points)[:200] if request.key_points else ""
+        query_parts = [
+            f"{request.purpose} email",
+            f"tone: {request.tone}",
+            f"length: {request.length}",
+            f"recipient: {request.recipient_name}",
+            f"company: {request.company_name}",
+        ]
+        if key_points_preview:
+            query_parts.append(f"key points: {key_points_preview}")
+        rag_query = " | ".join(query_parts)
+
+        templates = retrieve_context(rag_query)
         key_points_str = "\n".join(f"- {point}" for point in request.key_points)
 
         prompt = build_email_prompt(

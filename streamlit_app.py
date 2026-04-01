@@ -66,7 +66,19 @@ if submit_button:
 
     with st.spinner("Retrieving context and generating email..."):
 
-        query = f"{purpose} {tone} {length} email example"
+        # Build a rich semantic query from all available user inputs so that
+        # the vector search retrieves the most contextually relevant examples.
+        key_points_preview = key_points.strip()[:200] if key_points.strip() else ""
+        query_parts = [
+            f"{purpose} email",
+            f"tone: {tone}",
+            f"length: {length}",
+            f"recipient: {recipient}",
+            f"company: {company}",
+        ]
+        if key_points_preview:
+            query_parts.append(f"key points: {key_points_preview}")
+        query = " | ".join(query_parts)
         context = retrieve_context(query)
 
         prompt = build_email_prompt(
@@ -80,10 +92,16 @@ if submit_button:
             context=context
         )
 
-        response = llm.invoke(prompt)
+        try:
+            response = llm.invoke(prompt)
+            success = True
+        except Exception as e:
+            st.error(f"API Error: Could not generate email. Please check your Gemini API Key or connection. Details: {str(e)}")
+            success = False
 
-    st.success("Email Generated Successfully!")
+    if success:
+        st.success("Email Generated Successfully!")
 
-    st.markdown("Generated Email")
-    st.text_area("Output", response.content, height=400)
-    
+        st.markdown("Generated Email")
+        st.text_area("Output", response.content, height=400)
+    
